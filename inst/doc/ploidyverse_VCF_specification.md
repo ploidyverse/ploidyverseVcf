@@ -39,7 +39,7 @@ on what software and model was used for generating those calls.  ploidyverse
 VCFs should include a header formatted as follows:
 
 ```
-##ploidyverse=<ID=GenotypeTable,Software="EBG",Version=1,Model="hwe">
+##ploidyverse=<ID=GenotypeTable,Software=EBG,Version=1,Model=hwe>
 ```
 
 ## Sample information
