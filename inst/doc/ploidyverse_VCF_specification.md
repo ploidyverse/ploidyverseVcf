@@ -39,8 +39,78 @@ on what software and model was used for generating those calls.  ploidyverse
 VCFs should include a header formatted as follows:
 
 ```
-##ploidyverse=<ID=GenotypeTable,Software=EBG,Version=1,Model=hwe>
+##ploidyverse=<ID=GenotypeTable,Software=EBG,Version=1,Model=hwe,Description="Genotype calls generated from ploidyverse">
 ```
+
+## Reference genome
+
+If you aren't studying a model organism, it is likely that you are using a
+reference genome that is likely to be updated in the next few years, and/or
+a reference genome for a related species rather than the actual species that
+you are studying.  Therefore it is important to indicate what reference was
+used.
+
+Lines beginning with `##contig` provide information about each contig (usually,
+each chromosome) that was used for alignment.  Below are examples of contig 
+lines that should be found in a ploidyverse VCF.
+
+```
+##contig=<ID=Chr01,length=150798994,assembly="Miscanthus sinensis v7.1 on Phytozome">
+##contig=<ID=Chr02,length=146084461,assembly="Miscanthus sinensis v7.1 on Phytozome">
+```
+
+Optionally, you may wish to indicate the file name for the reference genome
+with a line formatted as follows:
+
+```
+##reference=Msinensis_DH1_v7_0.fasta
+```
+
+If you are using a non-reference pipeline, include the following line:
+
+```
+##contig=<ID=NonRef>
+```
+
+And use "NonRef" in the CHROM column for all variants in the genotype table.
+
+In VariantAnnotation, data from contig lines can be retrieved or assigned with 
+the `seqinfo` function.
+
+```{r}
+seqnames(seqinfo(vcf))   # The 'ID' field
+seqlengths(seqinfo(vcf)) # The 'length' field
+genome(seqinfo(vcf))     # The 'assembly' field
+```
+
+## SNP information
+
+The `INFO` column of the genotypes table can be used to store
+information about each variant in addition to what is already found in the
+`CHROM`, `POS`, `REF`, `ALT`, `QUAL`, and `FILTER` columns.  Header lines 
+beginning with `##INFO` describe all additional fields in the `INFO`
+column.
+
+When there is no reference genome, ploidyverse VCFs require an `INFO` field
+called `TAG` that provides the sequence tag flanking the site.  When there
+is a reference genome, we still recommend this field but do not require it.
+For reduced representation technologies such as genotyping-by-sequencing (GBS)
+or restriction site-associated DNA sequencing (RADseq), the entire sequence
+tag beginning with the restriction cut site should be provided.  Either the
+reference allele or most common allele should be represented here.  The
+purpose is to facilitate alignment to future reference genomes and 
+cross-referencing to other projects using the same reduced representation 
+technology.
+
+The following lines define these `INFO` fields:
+
+```
+##INFO=<ID=TAG,Number=1,Type=String,Description="DNA sequence of reference RAD tag">
+##INFO=<ID=TAGREVCOMPL,Number=0,Type=Flag,Description="The tag aligns to the bottom strand of the reference genome">
+##INFO=<ID=TAGPOS,Number=1,Type=Integer,Description="Position of variant with respect to the beginning of the RAD tag">
+```
+
+*Need to add details about how to infer the variant tags from this information*
 
 ## Sample information
 
@@ -93,7 +163,7 @@ Below are suggested header lines for these optional fields:
 ##META=<ID=MaterialProvider,Type=String,Number=.,Description="Person or organization curating biological materials">
 ##META=<ID=PopulationDesign,Type=String,Number=.,Values=[Mother, Father, Progeny, Control],Description="Identity within artificial population">
 ##META=<ID=BioSample,Type=String,Number=.,Description="Accession number in NCBI BioSample database">
-##META=<ID=DOI,Type=String,Number=.,Descrption="Digital Object Identifier">
+##META=<ID=DOI,Type=String,Number=.,Description="Digital Object Identifier">
 ```
 
 And below are examples of what the sample lines might look like:
@@ -113,3 +183,7 @@ meta(header(vcf))$SAMPLE
 ```
 
 where `vcf` is the name of a vcf object.
+
+Note that VariantAnnotation needs to be updated to deal with lines starting
+with `##META`; see https://support.bioconductor.org/p/113368/#113375 and the
+`.formatHeader` function in methods-writeVcf.R.
