@@ -83,6 +83,9 @@ seqlengths(seqinfo(vcf)) # The 'length' field
 genome(seqinfo(vcf))     # The 'assembly' field
 ```
 
+A URL and MD5 checksum can also be specified in the contig lines, although I am
+not sure that these are currently supported by VariantAnnotation.
+
 ## SNP information
 
 The `INFO` column of the genotypes table can be used to store
