@@ -1,0 +1,22 @@
+Package: ploidyverseClasses
+Version: 0.0
+Date: 2018-10-02
+Title: S4 Classes Shared among ploidyverse Packages
+Authors@R: c(
+    person("Lindsay V.", "Clark", email = "lvclark@illinois.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-3881-9252")),
+    person("Paul", "Blischak", email = "paul.blischak@gmail.com", role = c("aut")),
+    person("David", "Gerard",  email = "davidgerard@gmail.com",   role = c("aut"))
+  )
+Depends: VariantAnnotation (>= 1.27.6)
+Suggests: knitr
+VignetteBuilder: knitr
+Description: The 'ploidyverse' is a group of R packages for the analysis of genetic data
+  from diploid, polyploid, and mixed-ploidy samples using standardized input and output 
+  formats. The 'ploidyverseClasses' package defines S4 classes extending the 
+  collapsedVcf class from 'VariantAnnotation', in order to facilitate import and
+  export of data among 'ploidyverse' packages and between the 'ploidyverse' and other
+  software.  A file format specification is also included, describing requirements and
+  general advice for VCF files in the 'ploidyverse'.
+License: GPL-3
+URL: https://github.com/ploidyverse/ploidyverseClasses
