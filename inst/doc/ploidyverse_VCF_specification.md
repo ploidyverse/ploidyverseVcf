@@ -77,7 +77,7 @@ And use "NonRef" in the CHROM column for all variants in the genotype table.
 In VariantAnnotation, data from contig lines can be retrieved or assigned with 
 the `seqinfo` function.
 
-```{r}
+``` r
 seqnames(seqinfo(vcf))   # The 'ID' field
 seqlengths(seqinfo(vcf)) # The 'length' field
 genome(seqinfo(vcf))     # The 'assembly' field
@@ -181,7 +181,7 @@ headers for the genotype table.
 
 Within the VariantAnnotation package, the table of sample information can be accessed by:
 
-```{r}
+``` r
 meta(header(vcf))$SAMPLE
 ```
 
