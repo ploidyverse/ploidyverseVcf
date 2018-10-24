@@ -81,5 +81,16 @@ GetSeqInfo <- function(x){
 }
 ```
 
+If you want your function to behave differently depending on whether or
+not `ploidyverseClasses` is installed, you can use the function 
+`requireNamespace`.
+
+```{r}
+if(requireNamespace("ploidyverseClasses", quietly = TRUE)){
+  cat("Let's make a VCF!")
+} else {
+  cat("Let's make something else.")
+}
+```
 
 Note to self: Need to make sure S4 classes can import this way.
