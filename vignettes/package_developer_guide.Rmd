@@ -1,0 +1,85 @@
+---
+title: "Using ploidyverseClasses in your R package"
+author: "Lindsay V. Clark, University of Illinois, Urbana-Champaign"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Using ploidyverseClasses in your R package}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose of this document
+
+This document is intended for R package developers who wish to utilize S4
+classes from the ploidyverse in order to make their package interoperable
+with other ploidyverse packages.  It assumes basic familiarity with the process
+of creating an R package.
+
+## How to indicate dependency on `ploidyverseClasses`
+
+The first question you should ask yourself is, will the `ploidyverseVCF`
+class be mandatory for using your package?  Or, will users frequently
+want to import or export data in a different format, and not care about
+incorporating other ploidyverse software into their workflow?
+
+`ploidyverseClasses` depends on the Bioconductor package 
+[`VariantAnnotation`](https://bioconductor.org/packages/release/bioc/html/VariantAnnotation.html).
+Like many Bioconductor packages, `VariantAnnotation` can be unavoidably 
+cumbersome to install.  We on the ploidyverse core team believe that it is
+worthwhile for its flexibility in importing, storing, and exporting genomic
+variants and metadata, but we want to minimize how much we force it onto people
+who don't want it.
+
+### Option A: mandatory installation of `ploidyverseClasses`
+
+In this case, you will indicate dependency on `ploidyverseClasses` in the
+standard way that you would for any R package.  In your `DESCRIPTION` file,
+list `ploidyverseClasses` and `methods` on the `Imports` line.
+
+```
+Imports: ploidyverseClasses, methods
+```
+
+In the  `NAMESPACE` file, you should include the lines:
+
+* `importClassesFrom("ploidyverseClasses", "ploidyverseVCF")`
+* an `importFrom` line for any functions you are using from `ploidyverseClasses`
+* `importFrom` lines for any functions you are using from `VariantAnnotation` 
+or other packages
+
+For any ploidyverse or Bioconductor functions that you use, I recommend looking
+at the help page to determine exactly which package it originated from.  
+
+Remember that any package with an `importFrom` line will also need a mention 
+in the `Imports` line of your `DESCRIPTION` file.
+
+### Option B: optional installation of `ploidyverseClasses`
+
+If you don't want to force someone to install `ploidyverseClasses` (and its
+dependencies) in order to use your package, you should instead list
+`ploidyverseClasses` and `methods` on the `Suggests` line of your `DESCRIPTION`
+file.  Also list any Bioconductor packages whose functions you want to use
+in `Suggests`.
+
+```
+Suggests: ploidyverseClasses, methods
+```
+
+Then within your function definitions, use the `::` operator to indicate
+the package that a function comes from.  For example, to use the `seqinfo`
+function, type `GenomeInfoDb::seqinfo`.
+
+```{r eval = FALSE}
+# a trivial example
+GetSeqInfo <- function(x){
+  GenomeInfoDb::seqinfo(x)
+}
+```
+
+
+Note to self: Need to make sure S4 classes can import this way.

@@ -6,3 +6,4 @@
 ^LICENSE$
 ^\.gitignore$
 ^\.git$
+^vignettes/.*\.html$
