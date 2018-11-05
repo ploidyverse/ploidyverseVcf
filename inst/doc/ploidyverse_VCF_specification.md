@@ -187,6 +187,4 @@ meta(header(vcf))$SAMPLE
 
 where `vcf` is the name of a vcf object.
 
-Note that VariantAnnotation needs to be updated to deal with lines starting
-with `##META`; see https://support.bioconductor.org/p/113368/#113375 and the
-`.formatHeader` function in methods-writeVcf.R.
+
