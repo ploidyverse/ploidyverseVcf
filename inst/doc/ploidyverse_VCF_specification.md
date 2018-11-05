@@ -187,4 +187,66 @@ meta(header(vcf))$SAMPLE
 
 where `vcf` is the name of a vcf object.
 
+## Genotypes
 
+### GT field
+
+In keeping with the VCF specification and with existing software for calling
+genotypes in polyploids, ploidyverse VCFs code unphased genotypes in the format
+`0/0/0/1` and phased genotypes in the format `0|0|0|1`.  The example given is a
+tetraploid with three copies of the reference allele and one copy of the first
+alternative allele.  The genotype with the highest posterior probability should
+be given in the GT field.
+
+### AD field
+
+This is the only genotype format field that is mandatory for VCFs that are to
+be used as input to a ploidyverse genotype calling pipeline.  It is also
+mandatory for VCFs output by the genotype calling pipelines, in order to enable
+independent evaluation of genotyping quality.
+
+This field contains integers separated by commas.  The first integer corresponds
+to the reference allele, the second integer to the first alternative allele,
+the third integer to the second alternative allele, and so on.  Every integer
+indicates the read depth for the corresponding allele.  So, if the reference 
+allele is A and there is only one alternative allele G, a value of `12,4`
+would indicate 12 reads of A and four reads of G.  In a tetraploid that value 
+in the AD field might correspond to the genotype `0/0/0/1`.
+
+### GP field
+
+This field contains genotype posterior probabilities, ranging from zero to one
+and summing to one, for all possible genotypes.  These are comma-separated.
+In order to conserve disk space, we recommend rounding to the nearest 0.001.
+
+See the VCF specification for the ordering of genotypes.  For example, in a
+tetraploid with one alternative allele, there are five possible genotypes,
+and a posterior probability must be provided for each one.
+
+### PS field
+
+This field is needed only if SNPs are phased.  If the data were produced by
+RAD-seq or similar reduced-representation DNA sequencing technology, we
+highly recommend phasing SNPs that were called within the span of one RAD
+tag, *i.e.* alleles that can be unequivocally phased because they were on
+the same sequencing read.
+
+As suggested in the VCF specification, the phase set ID should be the
+alignment position of the first SNP in the phase set.  For non-reference
+pipelines, phase set IDs can simply be numbered sequentially from one.
+
+### GN field
+
+This is a custom field not described in the VCF specification, containing a
+numeric genotype ranging from 0 to 1, indicating the estimated intra-individual
+allele frequency for the alternative allele.  For example, if the genotype
+`0/0/0/1` was called with high confidence, the value would be 0.25.
+
+Generally this value should be the posterior mean genotype, *i.e.* the 
+copy number of the alternative allele multiplied by the posterior probability
+of that genotype, summed across all possible genotypes, divided by the ploidy.
+If the value for this field is calculated differently, it should be indicated
+in the file header.
+
+This field should have one value for each alternative allele, separated by
+commas when there are multiple alternative alleles.
