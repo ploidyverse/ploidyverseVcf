@@ -1,6 +1,6 @@
 Package: ploidyverseClasses
 Version: 0.0
-Date: 2018-10-02
+Date: 2019-01-04
 Title: S4 Classes Shared among ploidyverse Packages
 Authors@R: c(
     person("Lindsay V.", "Clark", email = "lvclark@illinois.edu", role = c("aut", "cre"),
@@ -9,6 +9,7 @@ Authors@R: c(
     person("David", "Gerard",  email = "davidgerard@gmail.com",   role = c("aut"))
   )
 Depends: VariantAnnotation (>= 1.27.6)
+Imports: S4Vectors, methods, GenomeInfoDb
 Suggests: knitr
 VignetteBuilder: knitr
 Description: The 'ploidyverse' is a group of R packages for the analysis of genetic data
