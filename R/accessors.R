@@ -17,6 +17,10 @@ setReplaceMethod("sampleinfo", "VCF", function(object, value){
     warning("Some row names not found in sample names from VCF")
     cat(rownames(value)[!rownames(value) %in% sam], sep = "\n")
   }
+  if(!all(sam %in% rownames(value))){
+    warning("Some samples in VCF not found in row names of table")
+    cat(sam[!sam %in% rownames(value)], sep = "\n")
+  }
   if("factor" %in% unlist(lapply(value, class))){
     warning("Factor columns found; should they be character?")
   }
