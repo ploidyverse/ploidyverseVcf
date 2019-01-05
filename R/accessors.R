@@ -24,6 +24,15 @@ setReplaceMethod("sampleinfo", "VCF", function(object, value){
   if("factor" %in% unlist(lapply(value, class))){
     warning("Factor columns found; should they be character?")
   }
+  if(!all(c("Species", "Ploidy") %in% colnames(value))){
+    warning("Both Species and Ploidy columns will need to be present to meet ploidyverse archival specifications.")
+  }
+  if("Ploidy" %in% colnames(value)){
+    value$Ploidy <- trimws(as.character(value$Ploidy))
+    if(any(!grepl("^[[:digit:]]x(\\+[[:digit:]]x)*$", value$Ploidy))){
+      stop("Ploidy not formatted correctly.")
+    }
+  }
   
   # set up table of column information
   metatab <- DataFrame(row.names = c("Species", "Ploidy", "CollectionLocation",
