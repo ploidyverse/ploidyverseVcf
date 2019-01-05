@@ -38,7 +38,16 @@ setReplaceMethod("sampleinfo", "VCF", function(object, value){
                                        "Accession number in NCBI BioSample database",
                                        "Digital Object Identifier"))
   # check for any non-standard columns, print message about how to add description
+  if(any(!colnames(value) %in% rownames(metatab))){
+    exttcol <- colnames(value)[!colnames(value) %in% rownames(metatab)]
+    metatab <- rbind(metatab, DataFrame(row.names = extcol,
+                                        Type = rep("String", length(extcol)),
+                                        Number = rep(".", length(extcol)),
+                                        Description = rep("Insert description here", length(extcol))))
+    warning("Non-standard column names found; please add descriptions to meta(header(object))$META")
+  }
   # subset to only columns used
+  metatab <- metatab[colnames(value),]
   
   # modify VCF and return
   meta(header(object))$SAMPLE <- DataFrame(value)
