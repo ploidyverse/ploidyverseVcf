@@ -22,8 +22,8 @@ of creating an R package.
 
 ## How to indicate dependency on `ploidyverseClasses`
 
-The first question you should ask yourself is, will the `ploidyverseVCF`
-class be mandatory for using your package?  Or, will users frequently
+The first question you should ask yourself is, will the ability to read and 
+write VCFs be mandatory for using your package?  Or, will users frequently
 want to import or export data in a different format, and not care about
 incorporating other ploidyverse software into their workflow?
 
@@ -39,15 +39,14 @@ who don't want it.
 
 In this case, you will indicate dependency on `ploidyverseClasses` in the
 standard way that you would for any R package.  In your `DESCRIPTION` file,
-list `ploidyverseClasses` and `methods` on the `Imports` line.
+list `ploidyverseClasses` on the `Imports` line.
 
 ```
-Imports: ploidyverseClasses, methods
+Imports: ploidyverseClasses
 ```
 
 In the  `NAMESPACE` file, you should include the lines:
 
-* `importClassesFrom("ploidyverseClasses", "ploidyverseVCF")`
 * an `importFrom` line for any functions you are using from `ploidyverseClasses`
 * `importFrom` lines for any functions you are using from `VariantAnnotation` 
 or other packages
