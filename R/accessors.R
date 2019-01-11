@@ -48,7 +48,7 @@ setReplaceMethod("sampleinfo", "VCF", function(object, value){
                                        "Digital Object Identifier"))
   # check for any non-standard columns, print message about how to add description
   if(any(!colnames(value) %in% rownames(metatab))){
-    exttcol <- colnames(value)[!colnames(value) %in% rownames(metatab)]
+    extcol <- colnames(value)[!colnames(value) %in% rownames(metatab)]
     metatab <- rbind(metatab, DataFrame(row.names = extcol,
                                         Type = rep("String", length(extcol)),
                                         Number = rep(".", length(extcol)),
