@@ -67,6 +67,9 @@ value in the \code{"Valid"} column is 1, and \code{FALSE} otherwise.
 \author{
 Lindsay V. Clark
 }
+\seealso{
+\code{sampleinfo}
+}
 
 \examples{
 # To be added
