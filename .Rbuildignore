@@ -7,3 +7,4 @@
 ^\.gitignore$
 ^\.git$
 ^vignettes/.*\.html$
+^testing\.R$
