@@ -10,8 +10,8 @@ software.
 VCF is stored as tab-delimited text, with a corresponding binary format called
 BCF.  Additionally, the 
 [VariantAnnotation](https://doi.org/doi:10.18129/B9.bioc.VariantAnnotation) 
-package from the Bioconductor 
-collection of R packages implements flexible S4 classes for storing any or all
+package, from the Bioconductor 
+collection of R packages, implements flexible S4 classes for storing any or all
 data from a VCF file within an R object, and has functions for reading and 
 writing VCF files.  In the ploidyverse, we extend these S4 classes, adding
 requirements for data that are mandatory for ploidyverse packages, and
@@ -183,6 +183,12 @@ Within the VariantAnnotation package, the table of sample information can be acc
 
 ``` r
 meta(header(vcf))$SAMPLE
+```
+
+or, using the `ploidyverseClasses` package:
+
+``` r
+sampleinfo(vcf)
 ```
 
 where `vcf` is the name of a vcf object.
