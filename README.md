@@ -15,5 +15,5 @@ This package serves three purposes for R package developers in the ploidyverse:
 
 Overall, the goal of this package is to make it as painless as possible for 
 ploidyverse packages to integrate with each other.  See the Package Developer 
-Guide at [vignettes/package_developer_guide.Rmd](https://github.com/ploidyverse/ploidyverseClasses/blob/master/vignettes/package_developer_guide.Rmd)
+Guide at [vignettes/package_developer_guide.Rmd](https://github.com/ploidyverse/ploidyverseClasses/blob/master/inst/doc/package_developer_guide.Rmd)
 for more information.

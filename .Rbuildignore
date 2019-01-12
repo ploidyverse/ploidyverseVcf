@@ -8,3 +8,4 @@
 ^\.git$
 ^vignettes/.*\.html$
 ^testing\.R$
+^vignettes/render_vignettes\.R$
