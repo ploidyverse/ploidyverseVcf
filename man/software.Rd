@@ -21,7 +21,7 @@ software(object) <- value
   \item{object}{
 A \code{VCF} object.
 }
-\item(value){
+\item{value}{
 A named character vector, named list, or data frame.  The names (or column
 names) \code{Software}, \code{Version}, \code{Model}, and 
 \code{Description} must be present.  The name \code{ID} must also be present
