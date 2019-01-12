@@ -4,6 +4,6 @@ importFrom("VariantAnnotation", geno, header, "header<-", info, meta, "meta<-",
            samples)
 importFrom("GenomeInfoDb", genome, seqinfo, seqlengths, seqnames)
 
-exportMethods(markValidity, sampleinfo, "sampleinfo<-",
+exportMethods(markValidity, sampleinfo, "sampleinfo<-", software, "software<-",
               validPloidyverseVCF_Archival, 
               validPloidyverseVCF_Postcall, validPloidyverseVCF_Precall)

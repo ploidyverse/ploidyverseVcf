@@ -14,3 +14,10 @@ sampleinfo(myvcf) <- data.frame(row.names = mysam,
                                 stringsAsFactors = FALSE)
 meta(header(myvcf))$META
 sampleinfo(myvcf)
+
+software(myvcf) <- c(Software = "polyRAD", Version = "1.1", Model = "IteratePopStruct",
+                     Description = "Just some genotypes")
+meta(header(myvcf))$ploidyverse
+
+software(myvcf) <- meta(header(myvcf))$ploidyverse # takes vector, list, or table
+software(myvcf)

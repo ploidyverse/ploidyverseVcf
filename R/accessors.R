@@ -63,3 +63,30 @@ setReplaceMethod("sampleinfo", "VCF", function(object, value){
   meta(header(object))$META <- metatab
   return(object)
 })
+
+# specify software version
+setGeneric("software<-",
+           function(object, value) standardGeneric("software<-"))
+setReplaceMethod("software", "VCF", function(object, value){
+  if(is.null(names(value)) ||
+     !all(c("Software", "Version", "Model", "Description") %in% names(value))){
+    stop("Replacement value must be named list or vector with names Software, Version, Model, and Description.")
+  }
+  softtable <- do.call(DataFrame, args = as.list(value))
+  if("ID" %in% colnames(softtable)){
+    rownames(softtable) <- softtable$ID
+    softtable <- softtable[,-match("ID", colnames(softtable))]
+  } else {
+    if(nrow(softtable) > 1){
+      stop("Multiple entries; please provide ID field.")
+    }
+    rownames(softtable) <- "GenotypeTable"
+  }
+  
+  meta(header(object))$ploidyverse <- softtable ## maybe change name of this table
+  return(object)
+})
+setGeneric("software", function(object) standardGeneric("software"))
+setMethod("software", "VCF", function(object){
+  return(meta(header(object))$ploidyverse)
+})
