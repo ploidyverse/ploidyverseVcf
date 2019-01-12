@@ -4,5 +4,5 @@ library(rmarkdown)
 
 render("package_developer_guide.Rmd",
        output_format = md_document("markdown_github"),
-       output_file = "../inst/doc/package_develper_guide.md")
+       output_file = "../inst/doc/package_developer_guide.md")
 
