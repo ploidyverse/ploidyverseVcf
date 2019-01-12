@@ -139,6 +139,10 @@ make it easy for them to get their genotype calls into the VCF.
 
 Note: `ploidyverseClasses` will include custom accessor functions for all of these.
 
+* `sampleinfo` is used for adding metadata about samples.
+* `software` is used for adding metadata about the software used for genotype 
+calling.
+
 ## Checking whether a `VCF` object meets ploidyverse specifications
 
 To check whether a `VCF` object meets ploidyverse specifications, run
