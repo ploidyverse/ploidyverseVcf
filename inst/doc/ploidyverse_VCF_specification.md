@@ -81,7 +81,7 @@ If you are using a non-reference pipeline, include the following line:
 
 And use "NonRef" in the CHROM column for all variants in the genotype table.
 
-In VariantAnnotation, data from contig lines can be retrieved or assigned with 
+In `VariantAnnotation`, data from contig lines can be retrieved or assigned with 
 the `seqinfo` function.
 
 ``` r
@@ -91,7 +91,7 @@ genome(seqinfo(vcf))     # The 'assembly' field
 ```
 
 A URL and MD5 checksum can also be specified in the contig lines, although I am
-not sure that these are currently supported by VariantAnnotation.
+not sure that these are currently supported by `VariantAnnotation`.
 
 ## SNP information
 
@@ -186,7 +186,8 @@ And below are examples of what the sample lines might look like:
 In the above example, "PMS-014" and "JM2014-S-4" would also be found as column
 headers for the genotype table.
 
-Within the VariantAnnotation package, the table of sample information can be accessed by:
+Within the `VariantAnnotation` package, the table of sample information can be 
+accessed by:
 
 ``` r
 meta(header(vcf))$SAMPLE
