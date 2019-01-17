@@ -8,14 +8,21 @@ data among ploidyverse packages, and between the ploidyverse and other
 software.
 
 VCF is stored as tab-delimited text, with a corresponding binary format called
-BCF.  Additionally, the 
-[VariantAnnotation](https://doi.org/doi:10.18129/B9.bioc.VariantAnnotation) 
-package, from the Bioconductor 
-collection of R packages, implements flexible S4 classes for storing any or all
-data from a VCF file within an R object, and has functions for reading and 
-writing VCF files.  In the ploidyverse, we extend these S4 classes, adding
-requirements for data that are mandatory for ploidyverse packages, and
-generally setting standards for storing genotype data from polyploid organisms.
+BCF.  Here we describe guidelines for VCF files imported into or
+exported from ploidyverse packages, and generally set standards for storing
+genotype data from polyploid organisms.  These guidelines are meant to make it
+easier to transfer data among software and researchers, rather than impose
+restrictions.  If your needs deviate in some way from what is described here
+and you would like to suggest some changes, you may file an issue or pull
+request on GitHub, or start a discussion on the ploidyverse Google Group.
+
+Additionally, the 
+[`VariantAnnotation`](https://doi.org/doi:10.18129/B9.bioc.VariantAnnotation) 
+package, from the Bioconductor collection of R packages, implements flexible 
+S4 classes for storing any or all data from a VCF file within an R object, and
+has functions for reading and writing VCF files.  The `ploidyverseClasses` R 
+package extends `VariantAnnotation` and is designed to assist package 
+developers and users with meeting the ploidyverse VCF guidelines.
 
 ## Guiding principles
 
