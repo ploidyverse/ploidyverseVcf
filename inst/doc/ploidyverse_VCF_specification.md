@@ -49,9 +49,16 @@ VCFs should include a header formatted as follows:
 ##ploidyverse=<ID=GenotypeCalls,Software=EBG,Version=1,Model=hwe,Description="Genotype calls generated from EBG">
 ```
 
-Additional, similar lines can be added for other pieces of software used in the
-pipeline for generating the VCF.  `ID` values such as `SNPmining`, 
-`ReadDepth`, `Phasing`, or `Imputation` are suggested.
+Additional lines can be added for other pieces of software used in the
+pipeline for generating the VCF.  Lines with the following `ID` values are 
+suggested:
+
+* `SNPdiscovery`: How variant loci were identified.
+* `ReadDepth`: How allelic read depth was calculated for each sample and locus.
+* `GenotypeCalls`: How genotypes and genotype posterior probabilities were
+inferred from allelic read depth.
+* `Phasing`: How alleles were arranged into haplotypes.
+* `Imputation`: How missing genotypes were imputed.
 
 In `ploidyverseClasses`, the `software` function can be used to add these 
 lines.
