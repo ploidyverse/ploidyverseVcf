@@ -72,15 +72,23 @@ setReplaceMethod("software", "VCF", function(object, value){
      !all(c("Software", "Version", "Model", "Description") %in% names(value))){
     stop("Replacement value must be named list or vector with names Software, Version, Model, and Description.")
   }
-  softtable <- do.call(DataFrame, args = as.list(value))
+  if(is(value, "DataFrame")){
+    softtable <- value
+  } else {
+    softtable <- do.call(DataFrame, args = as.list(value))
+  }
   if("ID" %in% colnames(softtable)){
     rownames(softtable) <- softtable$ID
     softtable <- softtable[,-match("ID", colnames(softtable))]
   } else {
-    if(nrow(softtable) > 1){
-      stop("Multiple entries; please provide ID field.")
+    if(nrow(softtable) > 1 && (is.null(rownames(softtable)) || 
+                               length(unique(rownames(softtable))) < 
+                                 nrow(softtable))){
+      stop("Multiple entries; please provide unique ID field.")
     }
-    rownames(softtable) <- "GenotypeCalls"
+    if(nrow(softtable) == 1 && is.null(rownames(softtable))){
+      rownames(softtable) <- "GenotypeCalls"
+    }
   }
   
   meta(header(object))$ploidyverse <- softtable ## maybe change name of this table
@@ -88,5 +96,12 @@ setReplaceMethod("software", "VCF", function(object, value){
 })
 setGeneric("software", function(object) standardGeneric("software"))
 setMethod("software", "VCF", function(object){
-  return(meta(header(object))$ploidyverse)
+  if(is.null(meta(header(object))$ploidyverse)){
+    return(DataFrame(Software = character(0),
+                     Version = character(0),
+                     Model = character(0),
+                     Description = character(0)))
+  } else {
+    return(meta(header(object))$ploidyverse)
+  }
 })
