@@ -80,7 +80,7 @@ setReplaceMethod("software", "VCF", function(object, value){
     if(nrow(softtable) > 1){
       stop("Multiple entries; please provide ID field.")
     }
-    rownames(softtable) <- "GenotypeTable"
+    rownames(softtable) <- "GenotypeCalls"
   }
   
   meta(header(object))$ploidyverse <- softtable ## maybe change name of this table

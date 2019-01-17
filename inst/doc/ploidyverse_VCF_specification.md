@@ -46,8 +46,15 @@ on what software and model was used for generating those calls.  ploidyverse
 VCFs should include a header formatted as follows:
 
 ```
-##ploidyverse=<ID=GenotypeTable,Software=EBG,Version=1,Model=hwe,Description="Genotype calls generated from ploidyverse">
+##ploidyverse=<ID=GenotypeCalls,Software=EBG,Version=1,Model=hwe,Description="Genotype calls generated from EBG">
 ```
+
+Additional, similar lines can be added for other pieces of software used in the
+pipeline for generating the VCF.  `ID` values such as `SNPmining`, 
+`ReadDepth`, `Phasing`, or `Imputation` are suggested.
+
+In `ploidyverseClasses`, the `software` function can be used to add these 
+lines.
 
 ## Reference genome
 
