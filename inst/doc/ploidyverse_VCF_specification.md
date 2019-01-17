@@ -244,6 +244,10 @@ See the VCF specification for the ordering of genotypes.  For example, in a
 tetraploid with one alternative allele, there are five possible genotypes,
 and a posterior probability must be provided for each one.
 
+If genotypes were called with a likelihood approach rather than a Bayesian
+approach, uniform priors can be used to convert likelihoods to posterior
+probabilities.
+
 ### PS field
 
 This field is needed only if SNPs are phased.  If the data were produced by
