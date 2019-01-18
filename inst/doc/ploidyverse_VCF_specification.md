@@ -217,6 +217,18 @@ where `vcf` is the name of a vcf object.
 
 ## Genotypes
 
+Within the tab-delimited genotype table, for every sample by locus, multiple
+pieces of information can be stored, separated by a colon (`:`).  The `FORMAT`
+column indicates which fields are stored in the table and what order they are
+in.  See the official VCF specification for more information.
+
+In `VariantAnnotation`, data from the genotype table can be retrieved using the
+`geno` function, which returns a named list of matrices.  Names of the list
+correspond to the genotype fields found in the file.  Each matrix stores data
+from the table for that field.  For fields such as `AD` or `GP` that can store
+multiple comma-separated values, the matrix is a two-dimensional list of 
+vectors.
+
 ### GT field
 
 In keeping with the VCF specification and with existing software for calling
