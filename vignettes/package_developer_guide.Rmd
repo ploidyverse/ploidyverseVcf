@@ -163,7 +163,7 @@ ploidy, reference genome version, and tag sequences in the absence of a
 reference, are present.  Files meeting these standards are suitable for 
 depositing at services such as Figshare and Zenodo.
 
-If you want ao `TRUE` or `FALSE` value to tell you whether the `VCF` object
+If you want a `TRUE` or `FALSE` value to tell you whether the `VCF` object
 meets these specifications (for example, for error checking before running a
 function), after running `markValidity` you can run:
 
