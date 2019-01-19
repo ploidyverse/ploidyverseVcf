@@ -3,6 +3,7 @@
 library(rmarkdown)
 
 render("package_developer_guide.Rmd",
-       output_format = md_document("markdown_github"),
-       output_file = "../inst/doc/package_developer_guide.md")
-
+       output_format = github_document(),
+       output_file = "package_developer_guide.md")
+file.rename("package_developer_guide.md", 
+            "../inst/doc/package_developer_guide.md")
