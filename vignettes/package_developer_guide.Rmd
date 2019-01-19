@@ -128,12 +128,21 @@ such as reference and alternative alleles, in `GRanges` format.
 
 ## Adding genotype calls to a `VCF` object
 
-Note: I would like to include some custom functions that construct the 
-matrix-lists that will go into the `geno` slots.  From polyRAD it would be a
-3D array of genotype posterior probabilties that need to be formatted to go
-into the GP slot, and a matrix of posterior mean genotypes to go into the GN
-slot.  Some feedback from other package developers might be helpful here to 
-make it easy for them to get their genotype calls into the VCF.
+The function `array3D_to_matrixList` can convert a 3D array, such as those 
+stored in the `genotypeLikelihood` and `posteriorProb` slots of a `RADdata`
+object in `polyRAD`, into the matrix-list format required in 
+`VariantAnnotation`.  So, if `myvcf` is a `VCF` object and `myrad` is a
+`RADdata` object, one could do something like:
+
+```{r eval = FALSE}
+geno(myvcf)$GP <- 
+  array3D_to_matrixList(myrad$posteriorProb[[1]][-OneAllelePerMarker(myrad)])
+```
+
+A matrix of posterior mean genotypes could to go into the `GN` slot.
+
+*Some feedback from other package developers might be helpful here to 
+make it easy for them to get their genotype calls into the VCF.*
 
 ## Adding metadata suggested in the ploidyverse specifications
 

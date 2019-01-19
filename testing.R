@@ -43,3 +43,6 @@ test
 row.names(test)
 rownames(test) <- c('a', 'a', 'a')
 test
+
+# look at genotype format
+geno(myvcf)$AD[,1:5]
