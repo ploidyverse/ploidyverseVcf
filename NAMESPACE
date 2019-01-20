@@ -7,4 +7,5 @@ importFrom("GenomeInfoDb", genome, seqinfo, seqlengths, seqnames)
 exportMethods(markValidity, sampleinfo, "sampleinfo<-", software, "software<-",
               validPloidyverseVCF_Archival, 
               validPloidyverseVCF_Postcall, validPloidyverseVCF_Precall)
-export(array3D_to_matrixList, matrixList_to_array3D)
+export(array3D_to_matrixList, enumerateGenotypes, genotypeStrings,
+       matrixList_to_array3D)

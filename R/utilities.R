@@ -28,3 +28,43 @@ matrixList_to_array3D <- function(mat){
                                   rownames(mat)))
   return(outarr)
 }
+
+# Generate a table of allele copy numbers of multiallelic phenotypes, in the
+# same order in which they would be listed according to the VCF specification.
+enumerateGenotypes <- function(ploidy, n_alleles){
+  if(length(ploidy) != 1 || length(n_alleles) != 1){
+    stop("Only one value can be provided for ploidy and for n_alleles.")
+  }
+  if(ploidy < 1 || n_alleles < 1){
+    stop("Both ploidy and n_alleles must be at least 1.")
+  }
+  if(ploidy %% 1 != 0 || n_alleles %% 1 != 0){
+    stop("Both ploidy and n_alleles must be integers.")
+  }
+  if(ploidy == 1){
+    return(diag(n_alleles))
+  } else {
+    onedown <- enumerateGenotypes(ploidy - 1, n_alleles)
+    outmat <- matrix(0, nrow = nrow(onedown) * n_alleles, ncol = n_alleles)
+    for(i in 1:n_alleles){
+      theserows <- ((i - 1) * nrow(onedown) + 1):(i * nrow(onedown))
+      outmat[theserows,] <- onedown
+      outmat[theserows,i] <- outmat[theserows,i] + 1
+    }
+    outmat <- unique(outmat, MARGIN = 1)
+    outmat <- outmat[do.call(order, lapply(n_alleles:1, function(i) outmat[,i])),]
+    return(outmat)
+  }
+}
+
+# Sanity check function to print out the genotypes as they are ordered in the 
+# VCF specification.  Possibly useful for GT field.
+genotypeStrings <- function(ploidy, n_alleles, sep = "/"){
+  genomat <- enumerateGenotypes(ploidy, n_alleles)
+  genostrings <- character(nrow(genomat))
+  for(i in 1:nrow(genomat)){
+    genostrings[i] <- paste(rep(1:n_alleles - 1, times = genomat[i,]),
+                            collapse = sep)
+  }
+  return(genostrings)
+}
