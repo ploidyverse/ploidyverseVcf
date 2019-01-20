@@ -1,4 +1,4 @@
-importFrom("methods", setGeneric, setMethod, setReplaceMethod)
+importFrom("methods", is, setGeneric, setMethod, setReplaceMethod)
 importFrom("S4Vectors", DataFrame)
 importFrom("VariantAnnotation", geno, header, "header<-", info, meta, "meta<-", 
            samples)
