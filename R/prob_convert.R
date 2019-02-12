@@ -28,3 +28,32 @@ genoConvMat <- function(ploidy, n_alleles, inverse = FALSE){
     return(outmat)
   }
 }
+
+# Take a 3D array of allele copy number probabilities and convert to 
+# multiallelic genotype probabilities.  3D array is formatted as in polyRAD.
+acn_to_geno <- function(probarray, alleles2loc){
+  ploidyp1 <- dim(probarray)[1]
+  ploidy <- ploidyp1 - 1
+  nind <- dim(probarray)[2]
+  
+  # get all numbers of alleles per locus
+  al_n <- sort(unique(table(alleles2loc)))
+  # get all conversion matrices
+  conv_list <- lapply(al_n, function(n) genoConvMat(ploidy, n, inverse = TRUE))
+  
+  # matrix-list to output, loci x samples
+  outmat <- matrix(list(), nrow = max(alleles2loc), ncol = dim(probarray)[2])
+  
+  # loop through loci and fill in the matrix
+  for(L in unique(alleles2loc)){
+    nal <- dim(thisarr)[3]
+    thisarr <- probarray[,, alleles2loc == L]
+    thisAlMat <- matrix(aperm(thisarr, c(1, 3, 2)),
+                        nrow = ploidyp1 * nal,
+                        ncol = nind)
+    thisGenMat <- conv_list[[match(nal, al_n)]] %*% thisAlMat
+    outmat[L,] <- lapply(1:nind, function(i) unname(thisGenMat[,i]))
+  }
+  
+  return(outmat)
+}
