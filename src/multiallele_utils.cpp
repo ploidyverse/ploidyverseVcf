@@ -19,6 +19,20 @@ double dmultinom(NumericVector x, NumericVector prob){
   return out;
 }
 
+// Probability distrubution under the Dirichlet multinomial.
+// For estimating genotype likelihoods under overdispersion.
+// [[Rcpp::export]]
+double dDirichletMultinom(NumericVector x, NumericVector prob, double alpha){
+  LogicalVector nonzero = prob > 0;
+  x = x[nonzero];
+  prob = prob[nonzero];
+  double n = sum(x);
+  double tot = lgamma(n + 1) + lgamma(alpha) - lgamma(n + alpha);
+  NumericVector alphas = alpha * prob;
+  double ind = sum(lgamma(x + 1) + lgamma(alphas) - lgamma(alphas + x));
+  return exp(tot - ind);
+}
+
 // Function to get number of possible genotypes.
 // (ploidy + nalleles - 1)!/(ploidy! * (nalleles - 1)!)
 // [[Rcpp::export]]
@@ -103,4 +117,7 @@ indexGenotype(c(0, 2))
 indexGenotype(c(1, 1))
 indexGenotype(c(0, 0, 2, 2))
 alleleCopy(c(1, 1, 1,2), 4)
+
+dmultinom(c(20, 25, 35), c(0.25, 0.25, 0.5))
+dDirichletMultinom(c(20, 25, 35), c(0.25, 0.25, 0.5), 9)
 */
