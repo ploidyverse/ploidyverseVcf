@@ -103,6 +103,38 @@ IntegerVector alleleCopy(IntegerVector genotype, int nalleles){
   return out;
 }
 
+// For a given genotype, return a matrix containing all possible gamete
+// genotypes.  Duplicates will be output reflecting relative gamete frequency.
+// Ploidy should be even.
+// [[Rcpp::export]]
+IntegerMatrix makeGametes(IntegerVector genotype){
+  int ploidy = genotype.size();
+  int gamploidy = ploidy / 2;
+  int ngametes = exp(lgamma(ploidy + 1) - lgamma(gamploidy + 1)) + 0.5;
+  IntegerMatrix out(ngametes, gamploidy);
+  IntegerMatrix subout;
+  int row = 0;
+  
+  if(gamploidy == 1){
+    for(int i = 0; i < ngametes; i++){
+      out(i, 0) = genotype(i);
+    }
+  } else {
+    for(int i = 0; i < gamploidy; i++){
+      subout = makeGametes(genotype[Range(i + 1, (ploidy - 1))]);
+      for(int r = 0; r < subout.nrow(); r++){
+        out(row, 0) = genotype(i);
+        for(int c = 0; c < subout.ncol(); c++){
+          out(row, c + 1) = subout(r, c);
+        }
+        row++;
+      }
+    }
+  }
+  
+  return out;
+}
+
 // You can include R code blocks in C++ files processed with sourceCpp
 // (useful for testing and development). The R code will be automatically 
 // run after the compilation.
@@ -120,4 +152,7 @@ alleleCopy(c(1, 1, 1,2), 4)
 
 dmultinom(c(20, 25, 35), c(0.25, 0.25, 0.5))
 dDirichletMultinom(c(20, 25, 35), c(0.25, 0.25, 0.5), 9)
+
+makeGametes(c(0, 1))
+makeGametes(0:3)
 */
