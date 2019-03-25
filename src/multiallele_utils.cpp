@@ -103,14 +103,10 @@ IntegerVector alleleCopy(IntegerVector genotype, int nalleles){
   return out;
 }
 
-// For a given genotype, return a matrix containing all possible gamete
-// genotypes.  Duplicates will be output reflecting relative gamete frequency.
-// Ploidy should be even.
-// [[Rcpp::export]]
-IntegerMatrix makeGametes(IntegerVector genotype){
+// Internal, recursive function for generating gamete genotypes
+IntegerMatrix makeGametesRecur(IntegerVector genotype, int gamploidy){
   int ploidy = genotype.size();
-  int gamploidy = ploidy / 2;
-  int ngametes = exp(lgamma(ploidy + 1) - lgamma(gamploidy + 1)) + 0.5;
+  int ngametes = Rf_choose(ploidy, gamploidy);
   IntegerMatrix out(ngametes, gamploidy);
   IntegerMatrix subout;
   int row = 0;
@@ -120,8 +116,8 @@ IntegerMatrix makeGametes(IntegerVector genotype){
       out(i, 0) = genotype(i);
     }
   } else {
-    for(int i = 0; i < gamploidy; i++){
-      subout = makeGametes(genotype[Range(i + 1, (ploidy - 1))]);
+    for(int i = 0; i < ploidy - gamploidy + 1; i++){
+      subout = makeGametesRecur(genotype[Range(i + 1, (ploidy - 1))], gamploidy - 1);
       for(int r = 0; r < subout.nrow(); r++){
         out(row, 0) = genotype(i);
         for(int c = 0; c < subout.ncol(); c++){
@@ -133,6 +129,15 @@ IntegerMatrix makeGametes(IntegerVector genotype){
   }
   
   return out;
+}
+
+// For a given genotype, return a matrix containing all possible gamete
+// genotypes.  Duplicates will be output reflecting relative gamete frequency.
+// Ploidy should be even.
+// [[Rcpp::export]]
+IntegerMatrix makeGametes(IntegerVector genotype){
+  int gamploidy = genotype.size() / 2;
+  return makeGametesRecur(genotype, gamploidy);
 }
 
 // You can include R code blocks in C++ files processed with sourceCpp
@@ -155,4 +160,5 @@ dDirichletMultinom(c(20, 25, 35), c(0.25, 0.25, 0.5), 9)
 
 makeGametes(c(0, 1))
 makeGametes(0:3)
+makeGametes(0:5)
 */
