@@ -140,6 +140,48 @@ IntegerMatrix makeGametes(IntegerVector genotype){
   return makeGametesRecur(genotype, gamploidy);
 }
 
+// Generate a square matrix indicating the expected frequency of progeny
+// genotypes produced by self-fertilization of any given genotype.
+// Original genotypes are in rows and progeny frequencies are in columns.
+// If f is a vector of genotype frequencies (arranged horizontally) and A is 
+// the selfing matrix, then fA is the vector of genotype frequencies after one 
+// generation of self fertilization.  Genotypes are in VCF order.
+// [[Rcpp::export]]
+NumericMatrix selfingMatrix(int ploidy, int nalleles){
+  IntegerMatrix allgen = enumerateGenotypes(ploidy, nalleles);
+  int ngen = allgen.nrow();
+  int gamploidy = ploidy / 2;
+  int ngametes = Rf_choose(ploidy, gamploidy);
+  IntegerVector thisgen(ploidy); // genotype that is being selfed
+  IntegerMatrix thesegametes(ngametes, gamploidy);
+  IntegerVector gam1(gamploidy); // genotype of gamete 1
+  IntegerVector gam2(gamploidy); // genotype of gamete 2
+  IntegerVector proggen(ploidy); // genotype of selfed progeny
+  int progindex; // genotype index for a selfed progeny
+  double increment = 1. / ngametes / ngametes;
+  NumericMatrix out(ngen, ngen);
+  
+  for(int i = 0; i < ngen; i++){
+    thisgen = allgen(i, _ );
+    thesegametes = makeGametes(thisgen);
+    for(int g1 = 0; g1 < ngametes; g1++){
+      gam1 = thesegametes(g1, _ );
+      for(int g2 = 0; g2 < ngametes; g2++){
+        gam2 = thesegametes(g2, _ );
+        for(int j = 0; j < gamploidy; j++){
+          proggen(j) = gam1(j);
+          proggen(j + gamploidy) = gam2(j);
+        }
+        std::sort(proggen.begin(), proggen.end());
+        progindex = indexGenotype(proggen);
+        out(i, progindex) += increment;
+      }
+    }
+  }
+  
+  return out;
+}
+
 // You can include R code blocks in C++ files processed with sourceCpp
 // (useful for testing and development). The R code will be automatically 
 // run after the compilation.
@@ -161,4 +203,5 @@ dDirichletMultinom(c(20, 25, 35), c(0.25, 0.25, 0.5), 9)
 makeGametes(c(0, 1))
 makeGametes(0:3)
 makeGametes(0:5)
+selfingMatrix(2, 2)
 */
