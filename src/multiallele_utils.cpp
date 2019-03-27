@@ -86,6 +86,26 @@ int indexGenotype(IntegerVector genotype){
   return out;
 }
 
+// Given a genotype index, output the genotype, without having to generate
+// the matrix of all possible genotypes.
+// [[Rcpp::export]]
+IntegerVector genotypeFromIndex(int index, int ploidy){
+  IntegerVector out(ploidy);
+  int nal; // number of alleles
+  
+  // work backwards from last allele in the genotype
+  for(int p = ploidy; p > 0; p--){
+    nal = 1;
+    while(nGen(p, nal) < index + 1){
+      nal++;
+    }
+    out(p - 1) = nal - 1;
+    index -= nGen(p, nal - 1);
+  }
+  
+  return out;
+}
+
 // Get the copy number of each allele in a given genotype.
 // Useful for converting genotypes exported by enumerateGenotypes to
 // a format useful for multinomial probability calculations.
