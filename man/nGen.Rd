@@ -75,15 +75,27 @@ once that the ploidy is above zero before making millions of calls to
 \code{\link{stats::dmultinom}}, but be faster and accessible from within
 Rcpp.
 
+Where \eqn{K} is the length of \eqn{x}, \eqn{p} is the vector of 
+probabilities, \eqn{\alpha} is the overdispersion parameter, and
+\eqn{n} is the sum of \eqn{x}:
+
+\deqn{n = \sum_{i = 1}^K x_i}{n = sum(i = 1, ..., K) x[i]}
+
 The output of \code{dmultinom} is
 
 \deqn{
-\frac{(\sum_{i = 1}^K x_i)!}{\prod_{i = 1}^K x_i!} \prod_{i = 1}^K p_i^{x_i}}{
-(sum(i = 1, ..., K) x[i])! / prod(i = 1, ...K) x[i]! * prod(i = 1, ..., K) p[i] ^ x[i]
+n! \prod_{i = 1}^K \frac{p_i^{x_i}}{x_i!}}{
+n! * prod(i = 1, ..., K)((p[i] ^ x[i])/x[i]!)
 }
 
-where \eqn{K} is the length of \eqn{x} and \eqn{p} is the vector of 
-probabilities.
+And the output of \code{dDirichletMultinom} is
+
+\deqn{
+\frac{(n!) \Gamma(\alpha)}{\Gamma(n + \alpha)} 
+\prod_{i = 1}^K \frac{\Gamma(p_i * \alpha + x_i)}{(x_i!) \Gamma(p_i * \alpha)}}{
+n! * \Gamma(\alpha) / \Gamma(n + \alpha) * 
+prod(i = 1, ...K)(\Gamma(p[i] * \alpha + x[i])/ x[i]! / \Gamma(p[i] * \alpha))
+}
 }
 \value{
 \code{dimultinom} and \code{dDirchletMultinom} return a single numeric value
