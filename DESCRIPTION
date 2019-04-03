@@ -4,10 +4,8 @@ Date: 2019-04-03
 Title: S4 Classes Shared among ploidyverse Packages
 Authors@R: c(
     person("Lindsay V.", "Clark", email = "lvclark@illinois.edu", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-3881-9252")),
-    person("Paul", "Blischak", email = "paul.blischak@gmail.com", role = c("aut")),
-    person("David", "Gerard",  email = "davidgerard@gmail.com",   role = c("aut"))
-  )
+           comment = c(ORCID = "0000-0002-3881-9252"))
+           )
 Depends: VariantAnnotation (>= 1.27.6)
 Imports: S4Vectors, methods, GenomeInfoDb, Rcpp
 Suggests: knitr
