@@ -6,6 +6,7 @@
 # number probabilities to multiallelic genotype probabilities.
 genoConvMat <- function(ploidy, n_alleles, inverse = FALSE){
   geno <- enumerateGenotypes(ploidy, n_alleles)
+  geno <- t(apply(geno, 1, function(x) alleleCopy(x, n_alleles)))
   outmat <- matrix(0L, nrow = (ploidy + 1) * n_alleles,
                    ncol = nrow(geno),
                    dimnames = list(paste(rep(0:(n_alleles - 1), each = ploidy + 1),
