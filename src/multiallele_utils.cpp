@@ -201,27 +201,3 @@ NumericMatrix selfingMatrix(int ploidy, int nalleles){
   
   return out;
 }
-
-// You can include R code blocks in C++ files processed with sourceCpp
-// (useful for testing and development). The R code will be automatically 
-// run after the compilation.
-//
-
-/*** R
-nGen(4, 3)
-nGen(2, 2)
-enumerateGenotypes(4, 3)
-enumerateGenotypes(2, 2)
-indexGenotype(c(0, 2))
-indexGenotype(c(1, 1))
-indexGenotype(c(0, 0, 2, 2))
-alleleCopy(c(1, 1, 1,2), 4)
-
-dmultinom(c(20, 25, 35), c(0.25, 0.25, 0.5))
-dDirichletMultinom(c(20, 25, 35), c(0.25, 0.25, 0.5), 9)
-
-makeGametes(c(0, 1))
-makeGametes(0:3)
-makeGametes(0:5)
-selfingMatrix(2, 2)
-*/
