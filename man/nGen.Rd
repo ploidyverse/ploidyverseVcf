@@ -74,6 +74,16 @@ once that the ploidy is above zero before making millions of calls to
 \code{dmultinom} should give identical results to 
 \code{\link{stats::dmultinom}}, but be faster and accessible from within
 Rcpp.
+
+The output of \code{dmultinom} is
+
+\deqn{
+\frac{(\sum_{i = 1}^K x_i)!}{\prod_{i = 1}^K x_i!} \prod_{i = 1}^K p_i^{x_i}}{
+(sum(i = 1, ..., K) x[i])! / prod(i = 1, ...K) x[i]! * prod(i = 1, ..., K) p[i] ^ x[i]
+}
+
+where \eqn{K} is the length of \eqn{x} and \eqn{p} is the vector of 
+probabilities.
 }
 \value{
 \code{dimultinom} and \code{dDirchletMultinom} return a single numeric value
