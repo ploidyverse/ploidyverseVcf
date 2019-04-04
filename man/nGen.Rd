@@ -72,8 +72,8 @@ once that the ploidy is above zero before making millions of calls to
 \code{nGen} with that ploidy value.
 
 \code{dmultinom} should give identical results to 
-\code{\link{stats::dmultinom}}, but be faster and accessible from within
-Rcpp.
+\code{\link[stats:Multinom]{stats::dmultinom}}, but be faster and accessible
+from within Rcpp.
 
 Where \eqn{K} is the length of \eqn{x}, \eqn{p} is the vector of 
 probabilities, \eqn{\alpha} is the overdispersion parameter, and
