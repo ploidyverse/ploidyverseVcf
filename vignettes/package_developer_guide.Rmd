@@ -92,6 +92,21 @@ if(requireNamespace("ploidyverseClasses", quietly = TRUE)){
 }
 ```
 
+### Using Rcpp functions from `ploidyverseClasses`
+
+The `ploidyverseClasses` package includes a set of utility functions 
+implemented in `Rcpp` to assist with calling, importing, and exporting 
+multiallelic polyploid genotypes. See `?nGen`.
+
+To use any of those functions from within R, you can follow option A or B above.
+
+To use any of those functions from within C++:
+
+* Add the line `LinkingTo: ploidyverseClasses, Rcpp` to your `DESCRIPTION` file.
+* Add the line `#include <ploidyverseClasses.h>` to your C++ file(s).
+* Call functions from the C++ code using the syntax
+`ploidyverseClasses::nGen(2, 2)`.
+
 ## Importing or creating a VCF
 
 VCF files can be imported using `VariantAnnotation`'s `readVcf` function.

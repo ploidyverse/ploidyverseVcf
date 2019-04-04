@@ -37,3 +37,7 @@ selfingMatrix <- function(ploidy, nalleles) {
     .Call('_ploidyverseClasses_selfingMatrix', PACKAGE = 'ploidyverseClasses', ploidy, nalleles)
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('_ploidyverseClasses_RcppExport_registerCCallable', PACKAGE = 'ploidyverseClasses')
+})

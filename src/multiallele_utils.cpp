@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
+// [[Rcpp::interfaces(r, cpp)]]
 
 // Utilities for working with multiallelic genotypes.
 
