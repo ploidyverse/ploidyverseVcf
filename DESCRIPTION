@@ -11,12 +11,13 @@ Imports: S4Vectors, methods, GenomeInfoDb, Rcpp, MASS
 Suggests: knitr
 VignetteBuilder: knitr
 LinkingTo: Rcpp
-Description: The 'ploidyverse' is a group of R packages for the analysis of genetic data
-  from diploid, polyploid, and mixed-ploidy samples using standardized input and output 
-  formats. The 'ploidyverseClasses' package defines S4 classes extending the 
-  collapsedVcf class from 'VariantAnnotation', in order to facilitate import and
-  export of data among 'ploidyverse' packages and between the 'ploidyverse' and other
-  software.  A file format specification is also included, describing requirements and
-  general advice for VCF files in the 'ploidyverse'.
+Description: The 'ploidyverse' is a group of R packages for the analysis of
+  genetic data from diploid, polyploid, and mixed-ploidy samples using 
+  standardized input and output formats. The 'ploidyverseClasses' package 
+  extends the Vcf class from 'VariantAnnotation' and provides utilities to 
+  facilitate import and export of data among 'ploidyverse' packages and between
+  the 'ploidyverse' and other software.  A file format specification is also 
+  included, describing requirements and general advice for VCF files in the
+  'ploidyverse'.
 License: GPL-3
 URL: https://github.com/ploidyverse/ploidyverseClasses
