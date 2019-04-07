@@ -1,11 +1,11 @@
 ---
-title: "Using ploidyverseClasses in your R package"
+title: "Using ploidyverseVcf in your R package"
 author: "Lindsay V. Clark, University of Illinois, Urbana-Champaign"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: html_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Using ploidyverseClasses in your R package}
+  %\VignetteIndexEntry{Using ploidyverseVcf in your R package}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -20,14 +20,14 @@ classes from the ploidyverse in order to make their package interoperable
 with other ploidyverse packages.  It assumes basic familiarity with the process
 of creating an R package.
 
-## How to indicate dependency on `ploidyverseClasses`
+## How to indicate dependency on `ploidyverseVcf`
 
 The first question you should ask yourself is, will the ability to read and 
 write VCFs be mandatory for using your package?  Or, will users frequently
 want to import or export data in a different format, and not care about
 incorporating other ploidyverse software into their workflow?
 
-`ploidyverseClasses` depends on the Bioconductor package 
+`ploidyverseVcf` depends on the Bioconductor package 
 [`VariantAnnotation`](https://bioconductor.org/packages/release/bioc/html/VariantAnnotation.html).
 Like many Bioconductor packages, `VariantAnnotation` can be unavoidably 
 cumbersome to install.  We on the ploidyverse core team believe that it is
@@ -35,19 +35,19 @@ worthwhile for its flexibility in importing, storing, and exporting genomic
 variants and metadata, but we want to minimize how much we force it onto people
 who don't want it.
 
-### Option A: mandatory installation of `ploidyverseClasses`
+### Option A: mandatory installation of `ploidyverseVcf`
 
-In this case, you will indicate dependency on `ploidyverseClasses` in the
+In this case, you will indicate dependency on `ploidyverseVcf` in the
 standard way that you would for any R package.  In your `DESCRIPTION` file,
-list `ploidyverseClasses` on the `Imports` line.
+list `ploidyverseVcf` on the `Imports` line.
 
 ```
-Imports: ploidyverseClasses
+Imports: ploidyverseVcf
 ```
 
 In the  `NAMESPACE` file, you should include the lines:
 
-* an `importFrom` line for any functions you are using from `ploidyverseClasses`
+* an `importFrom` line for any functions you are using from `ploidyverseVcf`
 * `importFrom` lines for any functions you are using from `VariantAnnotation` 
 or other packages
 
@@ -57,16 +57,16 @@ at the help page to determine exactly which package it originated from.
 Remember that any package with an `importFrom` line will also need a mention 
 in the `Imports` line of your `DESCRIPTION` file.
 
-### Option B: optional installation of `ploidyverseClasses`
+### Option B: optional installation of `ploidyverseVcf`
 
-If you don't want to force someone to install `ploidyverseClasses` (and its
+If you don't want to force someone to install `ploidyverseVcf` (and its
 dependencies) in order to use your package, you should instead list
-`ploidyverseClasses` and `methods` on the `Suggests` line of your `DESCRIPTION`
+`ploidyverseVcf` and `methods` on the `Suggests` line of your `DESCRIPTION`
 file.  Also list any Bioconductor packages whose functions you want to use
 in `Suggests`.
 
 ```
-Suggests: ploidyverseClasses, methods
+Suggests: ploidyverseVcf, methods
 ```
 
 Then within your function definitions, use the `::` operator to indicate
@@ -81,20 +81,20 @@ GetSeqInfo <- function(x){
 ```
 
 If you want your function to behave differently depending on whether or
-not `ploidyverseClasses` is installed, you can use the function 
+not `ploidyverseVcf` is installed, you can use the function 
 `requireNamespace`.
 
 ```{r eval = FALSE}
-if(requireNamespace("ploidyverseClasses", quietly = TRUE)){
+if(requireNamespace("ploidyverseVcf", quietly = TRUE)){
   cat("Let's make a VCF!")
 } else {
   cat("Let's make something else.")
 }
 ```
 
-### Using Rcpp functions from `ploidyverseClasses`
+### Using Rcpp functions from `ploidyverseVcf`
 
-The `ploidyverseClasses` package includes a set of utility functions 
+The `ploidyverseVcf` package includes a set of utility functions 
 implemented in `Rcpp` to assist with calling, importing, and exporting 
 multiallelic polyploid genotypes. See `?nGen`.
 
@@ -102,10 +102,9 @@ To use any of those functions from within R, you can follow option A or B above.
 
 To use any of those functions from within C++:
 
-* Add the line `LinkingTo: ploidyverseClasses, Rcpp` to your `DESCRIPTION` file.
-* Add the line `#include <ploidyverseClasses.h>` to your C++ file(s).
-* Call functions from the C++ code using the syntax
-`ploidyverseClasses::nGen(2, 2)`.
+* Add the line `LinkingTo: ploidyverseVcf, Rcpp` to your `DESCRIPTION` file.
+* Add the lines `#include <ploidyverseVcf.h>` and 
+`using namespace ploidyverseVCF` to your C++ file(s) that use the functions.
 
 ## Importing or creating a VCF
 
@@ -161,7 +160,7 @@ make it easy for them to get their genotype calls into the VCF.*
 
 ## Adding metadata suggested in the ploidyverse specifications
 
-Note: `ploidyverseClasses` will include custom accessor functions for all of these.
+Note: `ploidyverseVcf` will include custom accessor functions for all of these.
 
 * `sampleinfo` is used for adding metadata about samples.
 * `software` is used for adding metadata about the software used for genotype 

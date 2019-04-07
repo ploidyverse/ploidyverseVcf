@@ -20,7 +20,7 @@ Additionally, the
 [`VariantAnnotation`](https://doi.org/doi:10.18129/B9.bioc.VariantAnnotation) 
 package, from the Bioconductor collection of R packages, implements flexible 
 S4 classes for storing any or all data from a VCF file within an R object, and
-has functions for reading and writing VCF files.  The `ploidyverseClasses` R 
+has functions for reading and writing VCF files.  The `ploidyverseVcf` R 
 package extends `VariantAnnotation` and is designed to assist package 
 developers and users with meeting the ploidyverse VCF guidelines.
 
@@ -60,8 +60,7 @@ inferred from allelic read depth.
 * `Phasing`: How alleles were arranged into haplotypes.
 * `Imputation`: How missing genotypes were imputed.
 
-In `ploidyverseClasses`, the `software` function can be used to add these 
-lines.
+In `ploidyverseVcf`, the `software` function can be used to add these lines.
 
 ## Reference genome
 
@@ -207,7 +206,7 @@ accessed by:
 meta(header(vcf))$SAMPLE
 ```
 
-or, using the `ploidyverseClasses` package:
+or, using the `ploidyverseVcf` package:
 
 ``` r
 sampleinfo(vcf)
