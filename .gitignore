@@ -16,7 +16,7 @@
 
 # RStudio files
 .Rproj.user/
-ploidyverseClasses.Rproj
+ploidyverseVcf.Rproj
 
 # produced vignettes
 vignettes/*.html
