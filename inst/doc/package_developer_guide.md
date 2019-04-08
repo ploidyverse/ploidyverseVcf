@@ -94,7 +94,13 @@ To use any of those functions from within C++:
   - Add the line `LinkingTo: ploidyverseVcf, Rcpp` to your `DESCRIPTION`
     file.
   - Add the lines `#include <ploidyverseVcf.h>` and `using namespace
-    ploidyverseVCF` to your C++ file(s) that use the functions.
+    ploidyverseVCF;` to your C++ file(s) that use functions from
+    `ploidyverseVcf`.
+
+To be able to test your C++ files using `sourceCpp`, be sure to have
+them in the `src` directory of a package with the `DESCRIPTION` file
+modified as described above. If you put the C++ file in a different
+directory, `sourceCpp` will not be able to find `ploidyverseVcf.h`.
 
 ## Importing or creating a VCF
 
